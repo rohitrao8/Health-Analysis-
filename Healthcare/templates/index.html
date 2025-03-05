@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Monitoring System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Health Monitoring System</h1>
+
+        <form method="POST">
+            <label>Age:</label>
+            <input type="number" name="age" required>
+
+            <label>Sugar Level:</label>
+            <input type="number" step="0.1" name="sugar" required>
+
+            <label>Cholesterol:</label>
+            <input type="number" step="0.1" name="cholesterol" required>
+
+            <label>Hemoglobin:</label>
+            <input type="number" step="0.1" name="hemoglobin" required>
+
+            <button type="submit">Predict BP</button>
+        </form>
+
+        {% if predicted_bp %}
+            <h2>Predicted BP: {{ predicted_bp }}</h2>
+        {% endif %}
+
+        <div id="graph"></div>
+    </div>
+
+    <script>
+        var graphs = {{ plot | safe }};
+        Plotly.newPlot('graph', graphs.data, graphs.layout);
+    </script>
+</body>
+</html>
